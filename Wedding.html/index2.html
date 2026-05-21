@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdillah & Azizah — Wedding Invitation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dusty-blue': '#5F7A9D',
+                        'dusty-blue-dark': '#486A8A',
+                        'dusty-blue-deep': '#3A5672',
+                        'gold': '#D4AF37',
+                        'gold-light': '#E8C670',
+                        'gold-dark': '#B8960C',
+                        'cream': '#F8F4ED',
+                        'cream-dark': '#EDE6DA',
+                        'navy': '#1B2838',
+                        'navy-light': '#2C3E50',
+                    },
+                    fontFamily: {
+                        'cinzel': ['Cinzel', 'serif'],
+                        'great-vibes': ['Great Vibes', 'cursive'],
+                        'playfair': ['Playfair Display', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #F8F4ED; overflow-x: hidden; }
+
+        /* Opening Screen */
+        #opening-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: linear-gradient(135deg, #1B2838 0%, #2C3E50 50%, #1B2838 100%);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        #opening-screen.hidden-screen {
+            opacity: 0; transform: scale(1.1);
+            pointer-events: none;
+        }
+        .opening-bg {
+            position: absolute; inset: 0;
+            background: url('https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png') center/cover no-repeat;
+            opacity: 0.3;
+        }
+        .opening-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(27,40,56,0.7) 0%, rgba(27,40,56,0.5) 50%, rgba(27,40,56,0.9) 100%);
+        }
+
+        /* Gold shimmer animation */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .gold-shimmer {
+            background: linear-gradient(90deg, #D4AF37, #E8C670, #D4AF37, #B8960C, #D4AF37);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+        .gold-shimmer-btn {
+            background: linear-gradient(90deg, #D4AF37, #E8C670, #D4AF37, #B8960C, #D4AF37);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        .gold-shimmer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212,175,55,0.4);
+        }
+
+        /* Button open envelope */
+        .btn-open {
+            position: relative; overflow: hidden;
+            padding: 16px 48px;
+            background: transparent;
+            border: 2px solid #D4AF37;
+            color: #E8C670;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+        .btn-open::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, #D4AF37, #E8C670);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+        .btn-open:hover { color: #1B2838; }
+        .btn-open:hover::before { opacity: 1; }
+
+        /* Scroll animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.9); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal-scale.active { opacity: 1; transform: scale(1); }
+
+        /* Decorative elements */
+        .divider-ornament {
+            display: flex; align-items: center; justify-content: center; gap: 16px;
+        }
+        .divider-ornament .line {
+            width: 80px; height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+        .divider-ornament svg { color: #D4AF37; }
+
+        /* Countdown */
+        .countdown-box {
+            background: rgba(27,40,56,0.85);
+            border: 1px solid rgba(212,175,55,0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .countdown-box:hover {
+            border-color: #D4AF37;
+            box-shadow: 0 0 20px rgba(212,175,55,0.2);
+        }
+
+        /* Gallery */
+        .gallery-item {
+            overflow: hidden; position: relative;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .gallery-item img {
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item .overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(95,122,157,0.3));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .gallery-item:hover .overlay { opacity: 1; }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(27,40,56,0.95);
+            display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        #lightbox.show { display: flex; opacity: 1; }
+        #lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border: 2px solid rgba(212,175,55,0.3); }
+
+        /* Music player */
+        .music-player {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9000;
+        }
+        .music-player-btn {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1B2838, #2C3E50);
+            border: 2px solid #D4AF37;
+            color: #E8C670;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.2);
+        }
+        .music-player-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(212,175,55,0.4);
+        }
+        .music-player-btn.playing {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 4px 20px rgba(212,175,55,0.2); }
+            50% { box-shadow: 0 4px 30px rgba(212,175,55,0.5); }
+        }
+
+        .music-menu {
+            position: absolute; bottom: 70px; right: 0;
+            width: 280px;
+            background: rgba(27,40,56,0.97);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            opacity: 0; visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        .music-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .song-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .song-item:hover, .song-item.active {
+            background: rgba(212,175,55,0.1);
+        }
+        .song-item.active { color: #E8C670; }
+
+        /* Form styling */
+        .luxury-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(248,244,237,0.8);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: #1B2838;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .luxury-input:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+            background: #fff;
+        }
+        .luxury-input::placeholder { color: #9A8B7A; }
+
+        .radio-luxury {
+            display: none;
+        }
+        .radio-luxury-label {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .radio-luxury:checked + .radio-luxury-label {
+            background: linear-gradient(135deg, #D4AF37, #E8C670);
+            color: #1B2838;
+            border-color: #D4AF37;
+        }
+
+        /* Parallax */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: #D4AF37;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle linear infinite;
+        }
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #F8F4ED; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #B8960C; }
+
+        /* Section separator */
+        .section-separator {
+            width: 120px; height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 0 auto;
+        }
+
+        /* Map container */
+        .map-container {
+            position: relative;
+            border: 2px solid rgba(212,175,55,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .map-container::before {
+            content: '';
+            position: absolute; inset: 0;
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 8px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Wish card */
+        .wish-card {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .wish-card:hover {
+            border-color: #D4AF37;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.1);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed; top: 24px; right: 24px; z-index: 10001;
+            padding: 16px 24px;
+            background: rgba(27,40,56,0.95);
+            border: 1px solid #D4AF37;
+            border-radius: 8px;
+            color: #E8C670;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transform: translateX(120%);
+            transition: transform 0.4s ease;
+        }
+        .toast.show { transform: translateX(0); }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .divider-ornament .line { width: 40px; }
+            .parallax-bg { background-attachment: scroll; }
+        }
+
+        /* Navbar */
+        .nav-link {
+            position: relative;
+            color: rgba(248,244,237,0.8);
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: #E8C670; }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Hero section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png') center/cover no-repeat;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(27,40,56,0.4) 0%, rgba(27,40,56,0.6) 50%, rgba(27,40,56,0.8) 100%);
+        }
+
+        /* Event card */
+        .event-card {
+            background: rgba(255,255,255,0.6);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 8px;
+            padding: 32px;
+            transition: all 0.4s ease;
+        }
+        .event-card:hover {
+            border-color: #D4AF37;
+            box-shadow: 0 8px 40px rgba(212,175,55,0.1);
+            transform: translateY(-4px);
+        }
+
+        /* Audio visualization */
+        .audio-bars {
+            display: flex; align-items: flex-end; gap: 2px; height: 16px;
+        }
+        .audio-bar {
+            width: 3px;
+            background: #D4AF37;
+            border-radius: 1px;
+            animation: audio-bounce 0.8s ease-in-out infinite alternate;
+        }
+        .audio-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .audio-bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+        .audio-bar:nth-child(3) { height: 6px; animation-delay: 0.2s; }
+        .audio-bar:nth-child(4) { height: 12px; animation-delay: 0.3s; }
+        .audio-bar:nth-child(5) { height: 10px; animation-delay: 0.4s; }
+        .audio-bar.paused { animation-play-state: paused; }
+        @keyframes audio-bounce {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed; inset: 0; z-index: 8000;
+            background: rgba(27,40,56,0.97);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        .mobile-menu.show { opacity: 1; visibility: visible; }
+    </style>
+</head>
+<body class="bg-cream text-navy">
+
+    <!-- Opening Screen -->
+    <div id="opening-screen">
+        <div class="opening-bg"></div>
+        <div class="opening-overlay"></div>
+        <div class="relative z-10 text-center px-6 max-w-lg mx-auto">
+            <div class="mb-8">
+                <svg class="w-12 h-12 mx-auto text-gold mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </div>
+            <p class="text-gold-light/70 font-cinzel text-xs tracking-[4px] uppercase mb-6">The Wedding of</p>
+            <h1 class="font-great-vibes text-5xl md:text-6xl lg:text-7xl gold-shimmer mb-2 leading-tight">Abdillah</h1>
+            <div class="flex items-center justify-center gap-4 my-3">
+                <div class="w-12 h-[1px] bg-gold/50"></div>
+                <span class="font-cinzel text-gold text-lg">&amp;</span>
+                <div class="w-12 h-[1px] bg-gold/50"></div>
+            </div>
+            <h1 class="font-great-vibes text-5xl md:text-6xl lg:text-7xl gold-shimmer mb-8 leading-tight">Azizah</h1>
+            <div class="divider-ornament mb-6">
+                <div class="line"></div>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <div class="line"></div>
+            </div>
+            <p class="text-cream-dark/80 font-playfair text-sm tracking-widest uppercase mb-2">Kepada Yth.</p>
+            <p id="guest-name" class="font-great-vibes text-3xl md:text-4xl text-cream mb-2">Tamu Undangan</p>
+            <p class="text-cream-dark/60 font-inter text-xs tracking-wider mb-10">Bapak/Ibu/Saudara/i</p>
+            <button class="btn-open" onclick="openInvitation()">
+                <span class="flex items-center gap-3 justify-center">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Buka Undangan
+                </span>
+            </button>
+            <p class="text-cream-dark/40 font-inter text-[10px] tracking-widest uppercase mt-6">07 • 04 • 2030</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+
+        <!-- Navigation -->
+        <nav id="navbar" class="fixed top-0 left-0 right-0 z-[7000] transition-all duration-500 opacity-0 -translate-y-full">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="#hero" class="font-great-vibes text-2xl text-gold">A &amp; A</a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#hero" class="nav-link">Home</a>
+                    <a href="#countdown" class="nav-link">Countdown</a>
+                    <a href="#events" class="nav-link">Events</a>
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                    <a href="#rsvp" class="nav-link">RSVP</a>
+                    <a href="#location" class="nav-link">Location</a>
+                    <a href="#wishes" class="nav-link">Wishes</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-gold p-2" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="absolute top-4 right-4 text-gold p-2" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <a href="#hero" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">Home</a>
+            <a href="#countdown" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">Countdown</a>
+            <a href="#events" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">Events</a>
+            <a href="#gallery" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">Gallery</a>
+            <a href="#rsvp" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">RSVP</a>
+            <a href="#location" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">Location</a>
+            <a href="#wishes" class="nav-link text-xl py-3" onclick="toggleMobileMenu()">Wishes</a>
+        </div>
+
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <!-- Floating particles -->
+            <div id="particles-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+            <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+                <div class="reveal">
+                    <p class="text-gold-light/80 font-cinzel text-[10px] md:text-xs tracking-[6px] uppercase mb-4">We Are Getting Married</p>
+                </div>
+                <div class="reveal" style="transition-delay: 0.2s">
+                    <h1 class="font-great-vibes text-6xl md:text-8xl lg:text-9xl gold-shimmer mb-2 leading-none">Abdillah</h1>
+                </div>
+                <div class="reveal" style="transition-delay: 0.35s">
+                    <div class="flex items-center justify-center gap-4 md:gap-8 my-3 md:my-5">
+                        <div class="w-16 md:w-24 h-[1px] bg-gradient-to-r from-transparent via-gold/60 to-transparent"></div>
+                        <span class="font-playfair italic text-gold text-2xl md:text-3xl">&amp;</span>
+                        <div class="w-16 md:w-24 h-[1px] bg-gradient-to-r from-transparent via-gold/60 to-transparent"></div>
+                    </div>
+                </div>
+                <div class="reveal" style="transition-delay: 0.5s">
+                    <h1 class="font-great-vibes text-6xl md:text-8xl lg:text-9xl gold-shimmer mb-6 leading-none">Azizah</h1>
+                </div>
+                <div class="reveal" style="transition-delay: 0.65s">
+                    <div class="divider-ornament mb-6">
+                        <div class="line"></div>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="reveal" style="transition-delay: 0.75s">
+                    <p class="font-playfair text-cream text-lg md:text-xl tracking-widest mb-2">07 • 04 • 2030</p>
+                    <p class="font-inter text-cream-dark/60 text-xs tracking-[4px] uppercase">Gedung Mojokerto</p>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+                <svg class="w-5 h-5 text-gold/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,9 12,15 18,9"/></svg>
+            </div>
+        </section>
+
+        <!-- Bismillah / Opening Quote -->
+        <section class="py-16 md:py-24 px-4 bg-cream">
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="reveal">
+                    <p class="font-playfair text-dusty-blue text-lg md:text-xl italic leading-relaxed mb-6">
+                        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
+                    </p>
+                    <p class="font-cinzel text-gold text-xs tracking-[4px] uppercase">— QS. Ar-Rum: 21 —</p>
+                </div>
+                <div class="mt-8 reveal" style="transition-delay: 0.2s">
+                    <div class="section-separator"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Couple Section -->
+        <section class="py-16 md:py-24 px-4 bg-cream">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 md:mb-16 reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">The Happy Couple</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold">Mempelai</h2>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <!-- Groom -->
+                    <div class="reveal-left flex-1 text-center">
+                        <div class="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full overflow-hidden border-2 border-gold/40 mb-6 shadow-xl">
+                            <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png" alt="Abdillah Galang Prasojo" class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="font-great-vibes text-4xl md:text-5xl text-navy mb-2">Abdillah</h3>
+                        <h4 class="font-cinzel text-sm tracking-[3px] uppercase text-dusty-blue mb-3">Galang Prasojo</h4>
+                        <p class="font-inter text-xs text-navy-light/70 mb-1">Putra Kedua dari</p>
+                        <p class="font-playfair text-sm text-navy">Bapak H. Prasojo &amp; Ibu Hj. Prasojo</p>
+                    </div>
+                    <!-- Ampersand -->
+                    <div class="reveal-scale flex-shrink-0">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-gold/40 flex items-center justify-center bg-cream-dark">
+                            <span class="font-great-vibes text-4xl md:text-5xl gold-shimmer">&amp;</span>
+                        </div>
+                    </div>
+                    <!-- Bride -->
+                    <div class="reveal-right flex-1 text-center">
+                        <div class="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full overflow-hidden border-2 border-gold/40 mb-6 shadow-xl">
+                            <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png" alt="Azizah Aisyah Permata Putri" class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="font-great-vibes text-4xl md:text-5xl text-navy mb-2">Azizah</h3>
+                        <h4 class="font-cinzel text-sm tracking-[3px] uppercase text-dusty-blue mb-3">Aisyah Permata Putri</h4>
+                        <p class="font-inter text-xs text-navy-light/70 mb-1">Putri Kedua dari</p>
+                        <p class="font-playfair text-sm text-navy">Bapak H. Permata &amp; Ibu Hj. Rahayu</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section id="countdown" class="py-16 md:py-24 parallax-bg relative" style="background-image: url('https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1c394487d-f907-421e-b010-34e84fe387ef.png');">
+            <div class="absolute inset-0 bg-navy/70"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                <div class="reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">Save The Date</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-cream font-semibold mb-2">Menuju Hari Bahagia</h2>
+                    <div class="section-separator mb-10"></div>
+                </div>
+                <div class="grid grid-cols-4 gap-3 md:gap-6 max-w-2xl mx-auto reveal" style="transition-delay: 0.2s">
+                    <div class="countdown-box rounded-lg p-3 md:p-6 text-center">
+                        <span id="countdown-days" class="font-playfair text-3xl md:text-5xl text-gold font-bold">000</span>
+                        <p class="text-cream-dark/60 font-inter text-[10px] md:text-xs tracking-[2px] uppercase mt-1 md:mt-2">Hari</p>
+                    </div>
+                    <div class="countdown-box rounded-lg p-3 md:p-6 text-center">
+                        <span id="countdown-hours" class="font-playfair text-3xl md:text-5xl text-gold font-bold">00</span>
+                        <p class="text-cream-dark/60 font-inter text-[10px] md:text-xs tracking-[2px] uppercase mt-1 md:mt-2">Jam</p>
+                    </div>
+                    <div class="countdown-box rounded-lg p-3 md:p-6 text-center">
+                        <span id="countdown-minutes" class="font-playfair text-3xl md:text-5xl text-gold font-bold">00</span>
+                        <p class="text-cream-dark/60 font-inter text-[10px] md:text-xs tracking-[2px] uppercase mt-1 md:mt-2">Menit</p>
+                    </div>
+                    <div class="countdown-box rounded-lg p-3 md:p-6 text-center">
+                        <span id="countdown-seconds" class="font-playfair text-3xl md:text-5xl text-gold font-bold">00</span>
+                        <p class="text-cream-dark/60 font-inter text-[10px] md:text-xs tracking-[2px] uppercase mt-1 md:mt-2">Detik</p>
+                    </div>
+                </div>
+                <div class="mt-8 reveal" style="transition-delay: 0.4s">
+                    <p class="font-playfair text-cream/80 text-lg md:text-xl italic">Senin, 07 April 2030</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="py-16 md:py-24 px-4 bg-cream">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 md:mb-16 reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">Wedding Events</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold">Acara Pernikahan</h2>
+                    <div class="section-separator mt-4 mb-2"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                    <!-- Akad -->
+                    <div class="event-card reveal-left text-center">
+                        <div class="w-14 h-14 mx-auto mb-5 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M3 21h18M3 21V8l3-3h12l3 3v13M9 21v-6h6v6M9 10h.01M15 10h.01"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl md:text-2xl text-navy font-semibold mb-1">Akad Nikah</h3>
+                        <p class="font-cinzel text-gold text-[10px] tracking-[4px] uppercase mb-4">Holy Matrimony</p>
+                        <div class="space-y-3 text-navy-light/80">
+                            <div class="flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                <span class="font-inter text-sm">Senin, 07 April 2030</span>
+                            </div>
+                            <div class="flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                                <span class="font-inter text-sm">08:00 — 10:00 WIB</span>
+                            </div>
+                            <div class="flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <span class="font-inter text-sm">Gedung Mojokerto</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Resepsi -->
+                    <div class="event-card reveal-right text-center">
+                        <div class="w-14 h-14 mx-auto mb-5 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl md:text-2xl text-navy font-semibold mb-1">Resepsi</h3>
+                        <p class="font-cinzel text-gold text-[10px] tracking-[4px] uppercase mb-4">Wedding Reception</p>
+                        <div class="space-y-3 text-navy-light/80">
+                            <div class="flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                <span class="font-inter text-sm">Senin, 07 April 2030</span>
+                            </div>
+                            <div class="flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                                <span class="font-inter text-sm">11:00 — 14:00 WIB</span>
+                            </div>
+                            <div class="flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <span class="font-inter text-sm">Gedung Mojokerto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Map quick link -->
+                <div class="text-center mt-8 reveal" style="transition-delay: 0.3s">
+                    <a href="https://maps.google.com/?q=Gedung+Mojokerto" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 border border-gold/40 rounded-full text-gold-dark font-cinzel text-xs tracking-[3px] uppercase hover:bg-gold hover:text-navy transition-all duration-300">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Buka di Google Maps
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-16 md:py-24 px-4 bg-cream-dark/50">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12 md:mb-16 reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">Our Moments</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold">Gallery</h2>
+                    <div class="section-separator mt-4 mb-2"></div>
+                </div>
+                <!-- Masonry Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                    <div class="gallery-item row-span-2 reveal-scale" style="transition-delay: 0.1s" onclick="openLightbox(0)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png" alt="Gallery 1" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.15s" onclick="openLightbox(1)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/13359b63c-466d-4ea1-8490-7c45793c2d22.png" alt="Gallery 2" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.2s" onclick="openLightbox(2)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1dad9165d-c7fc-4e16-839d-6d4506ae4486.png" alt="Gallery 3" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item row-span-2 reveal-scale" style="transition-delay: 0.25s" onclick="openLightbox(3)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1a3c195fc-3a4c-42e7-b724-73352da7938f.png" alt="Gallery 4" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.3s" onclick="openLightbox(4)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1c394487d-f907-421e-b010-34e84fe387ef.png" alt="Gallery 5" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.35s" onclick="openLightbox(5)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/14fc6abe2-0a4e-4641-9fac-cdcc29f474d2.png" alt="Gallery 6" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.4s" onclick="openLightbox(6)">
+                        <img src="https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1e28cb2b3-578b-4c94-8de1-82958e5a9bdf.png" alt="Gallery 7" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.45s" onclick="openLightbox(7)">
+                        <img src="/ galang.JPG" alt="Gallery 8" class="w-full h-full object-cover rounded-md">
+                        <div class="overlay rounded-md">
+                            <svg class="w-8 h-8 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="py-16 md:py-24 px-4 bg-cream relative">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12 reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">RSVP</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold">Konfirmasi Kehadiran</h2>
+                    <div class="section-separator mt-4 mb-2"></div>
+                    <p class="font-inter text-sm text-navy-light/70 mt-4">Kami sangat menghargai kehadiran Anda. Mohon konfirmasi kehadiran Anda sebelum tanggal acara.</p>
+                </div>
+                <form id="rsvp-form" class="reveal" style="transition-delay: 0.2s" onsubmit="submitRSVP(event)">
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block font-cinzel text-xs tracking-[3px] uppercase text-navy-light mb-2">Nama Lengkap</label>
+                            <input type="text" id="rsvp-name" class="luxury-input" placeholder="Masukkan nama lengkap Anda" required>
+                        </div>
+                        <div>
+                            <label class="block font-cinzel text-xs tracking-[3px] uppercase text-navy-light mb-2">Jumlah Tamu</label>
+                            <select id="rsvp-guests" class="luxury-input">
+                                <option value="1">1 Orang</option>
+                                <option value="2">2 Orang</option>
+                                <option value="3">3 Orang</option>
+                                <option value="4">4 Orang</option>
+                                <option value="5">5 Orang</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-cinzel text-xs tracking-[3px] uppercase text-navy-light mb-3">Kehadiran</label>
+                            <div class="flex gap-3 flex-wrap">
+                                <input type="radio" name="attendance" id="attend-yes" value="Hadir" class="radio-luxury" checked>
+                                <label for="attend-yes" class="radio-luxury-label">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                                    Hadir
+                                </label>
+                                <input type="radio" name="attendance" id="attend-no" value="Tidak Hadir" class="radio-luxury">
+                                <label for="attend-no" class="radio-luxury-label">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                    Tidak Hadir
+                                </label>
+                                <input type="radio" name="attendance" id="attend-maybe" value="Masih Ragu" class="radio-luxury">
+                                <label for="attend-maybe" class="radio-luxury-label">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                                    Masih Ragu
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-cinzel text-xs tracking-[3px] uppercase text-navy-light mb-2">Pesan &amp; Ucapan</label>
+                            <textarea id="rsvp-message" class="luxury-input" rows="4" placeholder="Tulis ucapan dan doa untuk kedua mempelai..."></textarea>
+                        </div>
+                        <div class="text-center pt-2">
+                            <button type="submit" class="inline-flex items-center gap-3 px-10 py-4 gold-shimmer-btn text-navy font-cinzel text-xs tracking-[3px] uppercase rounded-none transition-all duration-300 hover:shadow-lg">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg>
+                                Kirim Konfirmasi
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section id="location" class="py-16 md:py-24 px-4 bg-cream-dark/50">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">Venue</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold">Lokasi Acara</h2>
+                    <div class="section-separator mt-4 mb-2"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="reveal-left">
+                        <div class="bg-cream rounded-lg p-8 border border-gold/20">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-playfair text-xl text-navy font-semibold">Gedung Mojokerto</h3>
+                                    <p class="font-inter text-sm text-navy-light/70 mt-1">Lokasi Akad Nikah &amp; Resepsi</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <svg class="w-4 h-4 text-gold mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <p class="font-inter text-sm text-navy-light/80">Jl. Majapahit No. 123, Mojokerto, Jawa Timur, Indonesia</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-gold flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                    <p class="font-inter text-sm text-navy-light/80">Senin, 07 April 2030</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-gold flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                                    <p class="font-inter text-sm text-navy-light/80">Akad: 08:00 | Resepsi: 11:00 WIB</p>
+                                </div>
+                            </div>
+                            <a href="https://maps.google.com/?q=Gedung+Mojokerto" target="_blank" class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-navy text-cream font-cinzel text-[10px] tracking-[3px] uppercase rounded hover:bg-navy-light transition-all duration-300">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Buka di Google Maps
+                            </a>
+                        </div>
+                    </div>
+                    <div class="reveal-right">
+                        <div class="map-container h-[300px] md:h-[400px]">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31628.40342667809!2d112.46!3d-7.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e0b0b0b0b0b%3A0x0!2sMojokerto!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Love Story / Wishes Section -->
+        <section id="wishes" class="py-16 md:py-24 px-4 bg-cream">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">Wishes</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold">Ucapan &amp; Doa</h2>
+                    <div class="section-separator mt-4 mb-2"></div>
+                    <p class="font-inter text-sm text-navy-light/70 mt-4">Berikan ucapan dan doa terbaik untuk kedua mempelai</p>
+                </div>
+                <!-- Wish Form -->
+                <form id="wish-form" class="reveal mb-10" style="transition-delay: 0.15s" onsubmit="submitWish(event)">
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <input type="text" id="wish-name" class="luxury-input" placeholder="Nama Anda" required>
+                        <input type="email" id="wish-email" class="luxury-input" placeholder="Email (opsional)">
+                    </div>
+                    <textarea id="wish-text" class="luxury-input mb-4" rows="3" placeholder="Tulis ucapan dan doa Anda..." required></textarea>
+                    <div class="text-center">
+                        <button type="submit" class="inline-flex items-center gap-2 px-8 py-3 bg-navy text-cream font-cinzel text-[10px] tracking-[3px] uppercase rounded hover:bg-navy-light transition-all duration-300">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            Kirim Ucapan
+                        </button>
+                    </div>
+                </form>
+                <!-- Wish Display -->
+                <div id="wishes-container" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                    <!-- Default wishes -->
+                    <div class="wish-card reveal" style="transition-delay: 0.2s">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full bg-dusty-blue/20 flex items-center justify-center">
+                                <span class="font-cinzel text-xs text-dusty-blue font-bold">A</span>
+                            </div>
+                            <div>
+                                <p class="font-playfair text-sm text-navy font-semibold">Ahmad Fauzi</p>
+                                <p class="font-inter text-[10px] text-navy-light/50">2 jam yang lalu</p>
+                            </div>
+                        </div>
+                        <p class="font-inter text-sm text-navy-light/80 leading-relaxed">Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fi khair. Semoga pernikahan kalian penuh berkah dan kebahagiaan. 💐</p>
+                    </div>
+                    <div class="wish-card reveal" style="transition-delay: 0.3s">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center">
+                                <span class="font-cinzel text-xs text-gold-dark font-bold">S</span>
+                            </div>
+                            <div>
+                                <p class="font-playfair text-sm text-navy font-semibold">Siti Nurhaliza</p>
+                                <p class="font-inter text-[10px] text-navy-light/50">5 jam yang lalu</p>
+                            </div>
+                        </div>
+                        <p class="font-inter text-sm text-navy-light/80 leading-relaxed">Selamat menempuh hidup baru! Semoga menjadi keluarga sakinah mawaddah wa rahmah. Bahagia selalu ya! 🤍✨</p>
+                    </div>
+                    <div class="wish-card reveal" style="transition-delay: 0.4s">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full bg-dusty-blue/20 flex items-center justify-center">
+                                <span class="font-cinzel text-xs text-dusty-blue font-bold">R</span>
+                            </div>
+                            <div>
+                                <p class="font-playfair text-sm text-navy font-semibold">Rizky Pratama</p>
+                                <p class="font-inter text-[10px] text-navy-light/50">1 hari yang lalu</p>
+                            </div>
+                        </div>
+                        <p class="font-inter text-sm text-navy-light/80 leading-relaxed">Happy wedding Abdillah &amp; Azizah! Semoga langgeng sampai Jannah. Amin ya Rabbal Alamin. 🎉</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gift Section -->
+        <section class="py-16 md:py-24 px-4 bg-cream-dark/50">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="reveal">
+                    <p class="font-cinzel text-gold text-[10px] tracking-[6px] uppercase mb-3">Wedding Gift</p>
+                    <h2 class="font-playfair text-3xl md:text-4xl text-navy font-semibold mb-2">Amplop Digital</h2>
+                    <div class="section-separator mb-6"></div>
+                    <p class="font-inter text-sm text-navy-light/70 mb-8">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberikan tanda kasih, Anda dapat mengirimkan melalui:</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 reveal" style="transition-delay: 0.2s">
+                    <div class="bg-cream rounded-lg p-6 border border-gold/20 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        </div>
+                        <p class="font-cinzel text-sm text-navy font-semibold mb-1">Transfer Bank BCA</p>
+                        <p class="font-playfair text-lg text-dusty-blue font-semibold mb-1" id="bca-number">1234567890</p>
+                        <p class="font-inter text-xs text-navy-light/60">a.n. Abdillah Galang Prasojo</p>
+                        <button onclick="copyToClipboard('bca-number')" class="mt-3 text-gold-dark font-inter text-xs tracking-wider hover:text-gold transition-colors flex items-center gap-1 mx-auto">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Salin Nomor Rekening
+                        </button>
+                    </div>
+                    <div class="bg-cream rounded-lg p-6 border border-gold/20 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        </div>
+                        <p class="font-cinzel text-sm text-navy font-semibold mb-1">Transfer Bank Mandiri</p>
+                        <p class="font-playfair text-lg text-dusty-blue font-semibold mb-1" id="mandiri-number">0987654321</p>
+                        <p class="font-inter text-xs text-navy-light/60">a.n. Azizah Aisyah Permata Putri</p>
+                        <button onclick="copyToClipboard('mandiri-number')" class="mt-3 text-gold-dark font-inter text-xs tracking-wider hover:text-gold transition-colors flex items-center gap-1 mx-auto">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Salin Nomor Rekening
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-16 md:py-20 px-4 bg-navy text-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-5">
+                <div class="absolute inset-0" style="background-image: url('https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png'); background-size: cover; background-position: center;"></div>
+            </div>
+            <div class="relative z-10 max-w-3xl mx-auto">
+                <div class="mb-8 reveal">
+                    <svg class="w-8 h-8 mx-auto text-gold mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <h2 class="font-great-vibes text-4xl md:text-5xl gold-shimmer mb-4">Terima Kasih</h2>
+                    <p class="font-playfair text-cream/60 text-sm md:text-base italic leading-relaxed max-w-lg mx-auto">
+                        Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kami.
+                    </p>
+                </div>
+                <div class="divider-ornament mb-8 reveal" style="transition-delay: 0.2s">
+                    <div class="line"></div>
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <div class="line"></div>
+                </div>
+                <div class="reveal" style="transition-delay: 0.3s">
+                    <p class="font-great-vibes text-2xl md:text-3xl text-cream/80 mb-4">Abdillah &amp; Azizah</p>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 text-cream/40 font-inter text-xs">
+                        <p>Kel. Bapak H. Prasojo &amp; Ibu Hj. Siti Aminah</p>
+                        <span class="hidden md:inline text-gold/30">&amp;</span>
+                        <p>Kel. Bapak H. Permata &amp; Ibu Hj. Rahayu</p>
+                    </div>
+                </div>
+                <div class="mt-12 pt-6 border-t border-cream/10 reveal" style="transition-delay: 0.4s">
+                    <p class="font-inter text-[10px] text-cream/30 tracking-widest uppercase">Made with ♥ | 07.04.2030</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-cream p-2 z-10" onclick="closeLightbox()">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-cream p-2 hover:text-gold transition-colors" onclick="event.stopPropagation(); navigateLightbox(-1)">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15,18 9,12 15,6"/></svg>
+        </button>
+        <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-cream p-2 hover:text-gold transition-colors" onclick="event.stopPropagation(); navigateLightbox(1)">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9,6 15,12 9,18"/></svg>
+        </button>
+        <img id="lightbox-img" src="" alt="Gallery" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div id="music-menu" class="music-menu mb-3">
+            <div class="p-3 border-b border-gold/10">
+                <p class="font-cinzel text-[10px] tracking-[3px] uppercase text-gold/80">Playlist</p>
+            </div>
+            <div id="song-list" class="py-2">
+                <div class="song-item active" data-song="0" onclick="selectSong(0)">
+                    <svg class="w-4 h-4 text-gold/60 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <div>
+                        <p class="font-inter text-xs text-cream/90">Beautiful in White</p>
+                        <p class="font-inter text-[10px] text-cream/50">Shane Filan</p>
+                    </div>
+                </div>
+                <div class="song-item" data-song="1" onclick="selectSong(1)">
+                    <svg class="w-4 h-4 text-gold/60 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <div>
+                        <p class="font-inter text-xs text-cream/90">Perfect</p>
+                        <p class="font-inter text-[10px] text-cream/50">Ed Sheeran</p>
+                    </div>
+                </div>
+                <div class="song-item" data-song="2" onclick="selectSong(2)">
+                    <svg class="w-4 h-4 text-gold/60 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <div>
+                        <p class="font-inter text-xs text-cream/90">A Thousand Years</p>
+                        <p class="font-inter text-[10px] text-cream/50">Christina Perri</p>
+                    </div>
+                </div>
+                <div class="song-item" data-song="3" onclick="selectSong(3)">
+                    <svg class="w-4 h-4 text-gold/60 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <div>
+                        <p class="font-inter text-xs text-cream/90">Marry You</p>
+                        <p class="font-inter text-[10px] text-cream/50">Bruno Mars</p>
+                    </div>
+                </div>
+                <div class="song-item" data-song="4" onclick="selectSong(4)">
+                    <svg class="w-4 h-4 text-gold/60 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <div>
+                        <p class="font-inter text-xs text-cream/90">All of Me</p>
+                        <p class="font-inter text-[10px] text-cream/50">John Legend</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="music-btn" class="music-player-btn" onclick="toggleMusicMenu()">
+            <div class="audio-bars" id="audio-bars">
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+            </div>
+        </button>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Audio Element (placeholder - replace src with actual audio files) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // ============================================
+        // OPENING SCREEN
+        // ============================================
+        const guestNameEl = document.getElementById('guest-name');
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('to');
+        if (guestName) {
+            guestNameEl.textContent = decodeURIComponent(guestName);
+        }
+
+        function openInvitation() {
+            const opening = document.getElementById('opening-screen');
+            opening.classList.add('hidden-screen');
+            document.body.style.overflow = 'auto';
+            document.getElementById('navbar').style.opacity = '1';
+            document.getElementById('navbar').style.transform = 'translateY(0)';
+            setTimeout(() => {
+                opening.style.display = 'none';
+                initScrollAnimations();
+            }, 1000);
+        }
+
+        // ============================================
+        // SCROLL ANIMATIONS (Intersection Observer)
+        // ============================================
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
+        const weddingDate = new Date('2030-04-07T08:00:00+07:00');
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = weddingDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown-days').textContent = '0';
+                document.getElementById('countdown-hours').textContent = '00';
+                document.getElementById('countdown-minutes').textContent = '00';
+                document.getElementById('countdown-seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown-days').textContent = String(days).padStart(3, '0');
+            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(27,40,56,0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+                navbar.style.borderBottom = '1px solid rgba(212,175,55,0.1)';
+            } else {
+                navbar.style.background = 'transparent';
+                navbar.style.backdropFilter = 'none';
+                navbar.style.borderBottom = 'none';
+            }
+        });
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('show');
+        }
+
+        // ============================================
+        // GALLERY LIGHTBOX
+        // ============================================
+        const galleryImages = [
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1cfa1e555-dd28-420a-933d-db9b2d261ca2.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/13359b63c-466d-4ea1-8490-7c45793c2d22.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1dad9165d-c7fc-4e16-839d-6d4506ae4486.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1a3c195fc-3a4c-42e7-b724-73352da7938f.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1c394487d-f907-421e-b010-34e84fe387ef.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/14fc6abe2-0a4e-4641-9fac-cdcc29f474d2.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/1e28cb2b3-578b-4c94-8de1-82958e5a9bdf.png',
+            'https://image.qwenlm.ai/public_source/f3f2da4c-6abc-4780-9d8b-86527a3408a5/13f737232-c5fb-40c5-9788-9475ab645e2f.png'
+        ];
+        let currentLightboxIndex = 0;
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = galleryImages[index];
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex = (currentLightboxIndex + direction + galleryImages.length) % galleryImages.length;
+            document.getElementById('lightbox-img').src = galleryImages[currentLightboxIndex];
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.classList.contains('show')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        // ============================================
+        // RSVP FORM
+        // ============================================
+        function submitRSVP(e) {
+            e.preventDefault();
+            const name = document.getElementById('rsvp-name').value;
+            const guests = document.getElementById('rsvp-guests').value;
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const message = document.getElementById('rsvp-message').value;
+
+            showToast(`Terima kasih ${name}! Konfirmasi kehadiran Anda telah kami terima. 🤍`);
+            document.getElementById('rsvp-form').reset();
+        }
+
+        // ============================================
+        // WISHES FORM
+        // ============================================
+        function submitWish(e) {
+            e.preventDefault();
+            const name = document.getElementById('wish-name').value;
+            const text = document.getElementById('wish-text').value;
+            const container = document.getElementById('wishes-container');
+
+            const initial = name.charAt(0).toUpperCase();
+            const colors = ['bg-dusty-blue/20 text-dusty-blue', 'bg-gold/20 text-gold-dark', 'bg-navy/20 text-navy'];
+            const colorClass = colors[Math.floor(Math.random() * colors.length)];
+
+            const wishHTML = `
+                <div class="wish-card" style="animation: fadeIn 0.5s ease">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 rounded-full ${colorClass} flex items-center justify-center">
+                            <span class="font-cinzel text-xs font-bold">${initial}</span>
+                        </div>
+                        <div>
+                            <p class="font-playfair text-sm text-navy font-semibold">${name}</p>
+                            <p class="font-inter text-[10px] text-navy-light/50">Baru saja</p>
+                        </div>
+                    </div>
+                    <p class="font-inter text-sm text-navy-light/80 leading-relaxed">${text}</p>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('afterbegin', wishHTML);
+            document.getElementById('wish-form').reset();
+            showToast('Ucapan Anda berhasil dikirim! Terima kasih 🤍');
+        }
+
+        // ============================================
+        // COPY TO CLIPBOARD
+        // ============================================
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Nomor rekening berhasil disalin! 📋');
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('Nomor rekening berhasil disalin! 📋');
+            });
+        }
+
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // ============================================
+        // MUSIC PLAYER
+        // ============================================
+        const bgMusic = document.getElementById('bg-music');
+        let isMusicPlaying = false;
+        let musicMenuOpen = false;
+        let currentSongIndex = 0;
+
+        const songs = [
+            { name: 'Beautiful in White', artist: 'Shane Filan' },
+            { name: 'Perfect', artist: 'Ed Sheeran' },
+            { name: 'A Thousand Years', artist: 'Christina Perri' },
+            { name: 'Marry You', artist: 'Bruno Mars' },
+            { name: 'All of Me', artist: 'John Legend' }
+        ];
+
+        function toggleMusicMenu() {
+            musicMenuOpen = !musicMenuOpen;
+            document.getElementById('music-menu').classList.toggle('show');
+        }
+
+        function selectSong(index) {
+            currentSongIndex = index;
+            document.querySelectorAll('.song-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-song="${index}"]`).classList.add('active');
+
+            // In a real implementation, change the audio source here
+            // bgMusic.src = songs[index].url;
+            // bgMusic.play();
+            isMusicPlaying = true;
+            updateMusicButton();
+            showToast(`Memutar: ${songs[index].name} - ${songs[index].artist} 🎵`);
+
+            // Close menu after selection
+            setTimeout(() => {
+                musicMenuOpen = false;
+                document.getElementById('music-menu').classList.remove('show');
+            }, 500);
+        }
+
+        function updateMusicButton() {
+            const btn = document.getElementById('music-btn');
+            const bars = document.querySelectorAll('.audio-bar');
+
+            if (isMusicPlaying) {
+                btn.classList.add('playing');
+                bars.forEach(bar => bar.classList.remove('paused'));
+            } else {
+                btn.classList.remove('playing');
+                bars.forEach(bar => bar.classList.add('paused'));
+            }
+        }
+
+        // Initialize audio bars as paused
+        updateMusicButton();
+
+        // Close music menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (musicMenuOpen && !e.target.closest('.music-player')) {
+                musicMenuOpen = false;
+                document.getElementById('music-menu').classList.remove('show');
+            }
+        });
+
+        // ============================================
+        // FLOATING PARTICLES
+        // ============================================
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            if (!container) return;
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ============================================
+        // PARALLAX EFFECT
+        // ============================================
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('.hero-bg');
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // ============================================
+        // PREVENT SCROLL ON OPENING
+        // ============================================
+        document.body.style.overflow = 'hidden';
+
+        // ============================================
+        // SMOOTH SCROLL FOR NAV LINKS
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.getElementById('navbar').offsetHeight || 60;
+                    const targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    window.scrollTo({ top: targetPos, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ============================================
+        // FADE IN ANIMATION
+        // ============================================
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
+
